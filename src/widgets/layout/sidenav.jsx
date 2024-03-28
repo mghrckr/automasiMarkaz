@@ -1,13 +1,9 @@
 import PropTypes from "prop-types";
 import { Link, NavLink } from "react-router-dom";
-import { XMarkIcon } from "@heroicons/react/24/outline";
-import {
-  Avatar,
-  Button,
-  IconButton,
-  Typography,
-} from "@material-tailwind/react";
+import { ChevronDownIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { IconButton, Typography, Button } from "@material-tailwind/react";
 import { useMaterialTailwindController, setOpenSidenav } from "@/context";
+import React from 'react';
 
 export function Sidenav({ brandImg, brandName, routes }) {
   const [controller, dispatch] = useMaterialTailwindController();
@@ -22,14 +18,11 @@ export function Sidenav({ brandImg, brandName, routes }) {
     <aside
       className={`${sidenavTypes[sidenavType]} ${openSidenav ? "translate-x-0" : "-translate-x-80"
         } fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0 border border-blue-gray-100`}
+      style={{ overflowY: 'auto', overflowX: 'hidden' }}
     >
-      <div
-        className={`relative flex items-center justify-center`}
-      >
+      <div className={`relative flex items-center justify-center`}>
         <Link to="/" className="py-6 px-8 text-center">
-          <img src={brandImg} alt="Your Image"
-            style={{ width: '100px' }}
-          />
+          <img src={brandImg} alt="Your Image" style={{ width: '100px' }} />
         </Link>
         <IconButton
           variant="text"
@@ -56,19 +49,13 @@ export function Sidenav({ brandImg, brandName, routes }) {
                 </Typography>
               </li>
             )}
-            {pages.map(({ icon, name, path }) => (
+            {pages.map(({ icon, name, path, subpages }) => (
               <li key={name}>
-                <NavLink to={`/${layout}${path}`}>
-                  {({ isActive }) => (
+                {subpages ? (
+                  <div>
                     <Button
-                      variant={isActive ? "gradient" : "text"}
-                      color={
-                        isActive
-                          ? sidenavColor
-                          : sidenavType === "dark"
-                            ? "white"
-                            : "blue-gray"
-                      }
+                      variant="text"
+                      color="inherit"
                       className="flex items-center gap-4 px-4 capitalize"
                       fullWidth
                     >
@@ -79,9 +66,56 @@ export function Sidenav({ brandImg, brandName, routes }) {
                       >
                         {name}
                       </Typography>
+                      <ChevronDownIcon className="w-5 h-5 text-gray-500" />
                     </Button>
-                  )}
-                </NavLink>
+                    <ul className="ml-8 mb-2">
+                      {subpages.map(({ name: subName, path: subPath }) => (
+                        <li key={subName}>
+                          <NavLink to={`/${layout}${subPath}`} activeClassName="text-blue-600">
+                            <Button
+                              variant="text"
+                              color="inherit"
+                              className="flex items-center gap-4 px-4 capitalize"
+                              fullWidth
+                            >
+                              <Typography
+                                color="inherit"
+                                className="font-medium capitalize"
+                              >
+                                {subName}
+                              </Typography>
+                            </Button>
+                          </NavLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <NavLink to={`/${layout}${path}`}>
+                    {({ isActive }) => (
+                      <Button
+                        variant={isActive ? "gradient" : "text"}
+                        color={
+                          isActive
+                            ? sidenavColor
+                            : sidenavType === "dark"
+                              ? "white"
+                              : "blue-gray"
+                        }
+                        className="flex items-center gap-4 px-4 capitalize"
+                        fullWidth
+                      >
+                        {icon}
+                        <Typography
+                          color="inherit"
+                          className="font-medium capitalize"
+                        >
+                          {name}
+                        </Typography>
+                      </Button>
+                    )}
+                  </NavLink>
+                )}
               </li>
             ))}
           </ul>
@@ -101,7 +135,5 @@ Sidenav.propTypes = {
   brandName: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
-
-Sidenav.displayName = "/src/widgets/layout/sidnave.jsx";
 
 export default Sidenav;

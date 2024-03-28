@@ -26,8 +26,8 @@ import {
   ordersOverviewData,
 } from "@/data";
 import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
-// import { useDispatch, useSelector } from "react-redux";
-// import { fetchUsers } from "@/store/actionCreators";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsers } from "@/store/actionCreators";
 
 
 export function Home() {

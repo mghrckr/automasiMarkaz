@@ -132,13 +132,13 @@ export function DashboardNavbar() {
                 </div>
               </MenuItem>
               <MenuItem className="flex items-center gap-4">
-                <Avatar
+                {/* <Avatar
                   src="https://demos.creative-tim.com/material-dashboard/assets/img/small-logos/logo-spotify.svg"
                   alt="item-1"
                   size="sm"
                   variant="circular"
-                />
-                <div>
+                /> */}
+                {/* <div>
                   <Typography
                     variant="small"
                     color="blue-gray"
@@ -153,7 +153,7 @@ export function DashboardNavbar() {
                   >
                     <ClockIcon className="h-3.5 w-3.5" /> 1 day ago
                   </Typography>
-                </div>
+                </div> */}
               </MenuItem>
               <MenuItem className="flex items-center gap-4">
                 <div className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-tr from-blue-gray-800 to-blue-gray-900">
